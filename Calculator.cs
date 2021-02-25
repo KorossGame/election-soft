@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ElectionSoft
 {
-    class Calculator
+    static class Calculator
     {
-        private Party winningParty;
+        private static Party winningParty;
 
-        private void Calculate(int seatsToAllocate, Party[] parties)
+        public static void Calculate(int seatsToAllocate, Party[] parties)
         {
             for (int seat = seatsToAllocate; seat > 0; seat--)
             {
@@ -17,16 +17,16 @@ namespace ElectionSoft
             }
         }
 
-        private Party GetPartyWithMaxVotes(Party[] parties)
+        private static Party GetPartyWithMaxVotes(Party[] parties)
         {
             int maxVotes = -1;
             winningParty = null;
 
             foreach (Party party in parties)
             {
-                if (party.numberOfVotes > maxVotes && party.MEPCount < party.MaxMEPCount)
+                if (party.NumberOfVotes > maxVotes && party.MEPCount < party.MaxMEPCount)
                 {
-                    maxVotes = party.numberOfVotes;
+                    maxVotes = party.NumberOfVotes;
                     winningParty = party;
                 }
             }
@@ -34,7 +34,7 @@ namespace ElectionSoft
             return winningParty;
         }
 
-        private void IncreaseMEPCount(Party winningParty)
+        private static void IncreaseMEPCount(Party winningParty)
         {
             winningParty.MEPCount++;
         }
