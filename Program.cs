@@ -7,17 +7,32 @@ namespace ElectionSoft
     {
         static void Main(string[] args)
         {
-            List<string> a = new List<string> { "BP1" , "BP2" };
-            List<string> b = new List<string> { "AP1" };
+            List<string> a = new List<string> { "MEP1" , "MEP2" };
 
-            Party c = new Party("Brexit Party", 452321, a);
-            Party d = new Party("Liberal Democrats", 203989, b);
-            Party e = new Party("Labour", 164682, a);
-            Party f = new Party("Conservative", 126138, b);
+            Party c = new Party("Brexit Party", 200000, a);
+            Party d = new Party("Conservative", 100000, a);
 
-            List<Party> par = new List<Party> { d, c, e, f };
+            List<Party> par = new List<Party> { c, d };
 
-            Calculator.Calculate(3, par);
+            // Calculate
+            Calculator.Calculate(2, par);
+
+            // Output
+            for (int i=0; i<par.Count; i++)
+            {
+                string partyInfo = par[i].getDataAboutParty();
+                if (partyInfo != "")
+                {
+                    if (i == par.Count - 1)
+                    {
+                        Console.WriteLine(partyInfo);
+                    }
+                    else
+                    {
+                        Console.WriteLine(partyInfo);
+                    }
+                }
+            }
         }
     }
 }

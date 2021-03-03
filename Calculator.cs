@@ -7,6 +7,8 @@ namespace ElectionSoft
 {
     static class Calculator
     {
+        private static Random random = new Random(Guid.NewGuid().GetHashCode());
+        private static List<Party> maxVotesParties = new List<Party>();
         private static Party winningParty;
         private static int counter = 0;
 
@@ -26,25 +28,46 @@ namespace ElectionSoft
 
         private static Party GetPartyWithMaxVotes(List<Party> parties)
         {
+            // Clear list from previous function call
+            maxVotesParties.Clear();
+
+            // Reset max votes and winning party
             int maxVotes = -1;
             winningParty = null;
 
+            // Save parties with max votes
             foreach (Party party in parties)
             {
                 if (party.NumberOfVotes > maxVotes && party.MEPCount < party.MaxMEPCount)
                 {
+                    // As we got new max vote count - set new max votes, clear the list and add leading party
                     maxVotes = party.NumberOfVotes;
-                    winningParty = party;
+                    maxVotesParties.Clear();
+                    maxVotesParties.Add(party);
+                }
+                else if (party.NumberOfVotes == maxVotes && party.MEPCount < party.MaxMEPCount)
+                {
+                    // As we have equal number of votes we add each party to list
+                    maxVotesParties.Add(party);
                 }
             }
+            
+            // Choose random party from list of parties with max votes count
+            int winningIndex = random.Next(maxVotesParties.Count);
+            winningParty = maxVotesParties[winningIndex];
 
             return winningParty;
         }
 
         private static void IncreaseMEPCount(Party winningParty)
         {
+            // Increase counter of MEP allocated
             counter++;
+
+            // Increase MEP count of particullar party
             winningParty.MEPCount++;
+
+            // Set new number of votes of winning party
             winningParty.NumberOfVotes /= (counter + 1);
         }
     }
