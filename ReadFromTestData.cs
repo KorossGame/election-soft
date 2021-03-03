@@ -3,27 +3,15 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace ReadFromTestData
+namespace ElectionSoft
 {
 
-    public class Data
-    {
-        public string PartyName { get; set; }
-        public int NumberOfVotes { get; set; }
-        public List<string> SeatsName { get; set; }
 
-        public Data(string PartyName, int NumberOfVotes, List<string> SeatsName)
-        {
-            this.PartyName = PartyName;
-            this.NumberOfVotes = NumberOfVotes;
-            this.SeatsName = SeatsName;
-        }
-    }
-
-    static class Program
+    static class ReadWriteClass
     {
         public static void ReadFile()
         {
+            /*
             var path = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assessment1Data.txt");
             Console.WriteLine(path);
             var lines = File.ReadLines(path);
@@ -66,16 +54,24 @@ namespace ReadFromTestData
                 data.SeatsName.ForEach(Console.WriteLine);
                 Console.WriteLine("------------------------");
             }
+            */
         }
-    }
 
-    // run read class to test if code is working correctly
-    // uncomment below
-    static class Read
-    {
-        static void Main(string[] args)
+        public static void WriteFile(List<Party> par) 
         {
-           // Program.ReadFile();
+
+            var path = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assessment1TestResults.txt");
+            for (int i = 0; i < par.Count; i++)
+            {
+                string partyInfo = par[i].getDataAboutParty();
+                if (partyInfo != "")
+                {
+                    File.AppendAllText(path, partyInfo);
+                }
+
+            }
+            
         }
     }
+    
 }

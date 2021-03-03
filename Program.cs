@@ -18,21 +18,7 @@ namespace ElectionSoft
             Calculator.Calculate(2, par);
 
             // Output
-            for (int i=0; i<par.Count; i++)
-            {
-                string partyInfo = par[i].getDataAboutParty();
-                if (partyInfo != "")
-                {
-                    if (i == par.Count - 1)
-                    {
-                        Console.WriteLine(partyInfo);
-                    }
-                    else
-                    {
-                        Console.WriteLine(partyInfo);
-                    }
-                }
-            }
+            ReadWriteClass.WriteFile(par);
         }
     }
 }
