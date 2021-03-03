@@ -14,15 +14,12 @@ namespace ElectionSoft
 
         public static void Calculate(int seatsToAllocate, List<Party> parties)
         {
+            if (parties.Count == 0) return;
+
             for (int seat = seatsToAllocate; seat > 0; seat--)
             {
                 winningParty = GetPartyWithMaxVotes(parties);
                 IncreaseMEPCount(winningParty);
-            }
-
-            foreach (Party party in parties)
-            {
-                Console.WriteLine(party.PartyName+"\t"+party.MEPCount);
             }
         }
 
@@ -53,7 +50,7 @@ namespace ElectionSoft
             }
             
             // Choose random party from list of parties with max votes count
-            int winningIndex = random.Next(maxVotesParties.Count);
+            int winningIndex = random.Next(maxVotesParties.Count - 1);
             winningParty = maxVotesParties[winningIndex];
 
             return winningParty;
@@ -68,7 +65,7 @@ namespace ElectionSoft
             winningParty.MEPCount++;
 
             // Set new number of votes of winning party
-            winningParty.NumberOfVotes /= (counter + 1);
+            winningParty.NumberOfVotes = winningParty.NumberOfVotes * winningParty.MEPCount / (counter + 1);
         }
     }
 }

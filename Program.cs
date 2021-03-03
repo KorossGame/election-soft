@@ -7,18 +7,17 @@ namespace ElectionSoft
     {
         static void Main(string[] args)
         {
-            List<string> a = new List<string> { "MEP1" , "MEP2" };
+            // Read data from file
+            ReadWriteClass.ReadFile();
 
-            Party c = new Party("Brexit Party", 200000, a);
-            Party d = new Party("Conservative", 100000, a);
-
-            List<Party> par = new List<Party> { c, d };
+            // Create new list of Parties
+            List<Party> parties = ReadWriteClass.CreatePartiesFromData();
 
             // Calculate
-            Calculator.Calculate(2, par);
+            Calculator.Calculate(ReadWriteClass.seatsToAllocate, parties);
 
             // Output
-            ReadWriteClass.WriteFile(par);
+            ReadWriteClass.WriteFile(parties);
         }
     }
 }

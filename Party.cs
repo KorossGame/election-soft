@@ -14,11 +14,11 @@ namespace ElectionSoft
 
         private string output;
 
-        public Party(string partyName, int numberOfVotes, List<string> seatsName)
+        public Party(string partyName, int numberOfVotes, List<string> seatNames)
         {
             PartyName = partyName;
             NumberOfVotes = numberOfVotes;
-            SeatsName = seatsName;
+            SeatsName = seatNames;
             MaxMEPCount = SeatsName.Count;
         }
 
@@ -36,7 +36,6 @@ namespace ElectionSoft
             {
                 output += ',' + SeatsName[i];
             }
-
             output += ";";
 
             return output;
