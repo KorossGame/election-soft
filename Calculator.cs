@@ -29,7 +29,7 @@ namespace ElectionSoft
             maxVotesParties.Clear();
 
             // Reset max votes and winning party
-            int maxVotes = -1;
+            int maxVotes = -10000;
             winningParty = null;
 
             // Save parties with max votes
@@ -48,10 +48,15 @@ namespace ElectionSoft
                     maxVotesParties.Add(party);
                 }
             }
-            
-            // Choose random party from list of parties with max votes count
-            int winningIndex = random.Next(maxVotesParties.Count - 1);
-            winningParty = maxVotesParties[winningIndex];
+
+            // If we have a winner (maybe all slots are full)
+            if (maxVotesParties.Count >= 1)
+            {
+                int winningIndex = random.Next(maxVotesParties.Count - 1);
+
+                // Choose random party from list of parties with max votes count
+                winningParty = maxVotesParties[winningIndex];
+            }
 
             return winningParty;
         }
@@ -61,11 +66,14 @@ namespace ElectionSoft
             // Increase counter of MEP allocated
             counter++;
 
-            // Increase MEP count of particullar party
-            winningParty.MEPCount++;
+            if (winningParty != null)
+            {
+                // Increase MEP count of particullar party
+                winningParty.MEPCount++;
 
-            // Set new number of votes of winning party
-            winningParty.NumberOfVotes = winningParty.NumberOfVotes * winningParty.MEPCount / (counter + 1);
+                // Set new number of votes of winning party
+                winningParty.NumberOfVotes = winningParty.NumberOfVotes * winningParty.MEPCount / (counter + 1);
+            }
         }
     }
 }

@@ -50,12 +50,10 @@ namespace ElectionSoft
 
             List<string> dataToWrite = new List<string>();
 
-            // If any errors - put them on top of file
-            if (errorRaised) dataToWrite.Add(errorMessage);
-
-            // If run in debug mode - write errors in console too
+            // If run in debug mode - write errors in console and on top of file
             #if DEBUG
                 Console.WriteLine(errorMessage);
+                if (errorRaised) dataToWrite.Add(errorMessage);
             #endif
 
             dataToWrite.Add(electionName);
@@ -125,7 +123,7 @@ namespace ElectionSoft
                     // Add seats name
                     for (int seatIndex = 2; seatIndex < currentLine.Length; seatIndex++)
                     {
-                        string seatName = currentLine[seatIndex].Replace(':', '\0').Replace(' ','\0');
+                        string seatName = currentLine[seatIndex].TrimEnd(' ',';');
                         if (seatName == "\0" || String.IsNullOrEmpty(seatName))
                         {
                             errorRaised = true;
