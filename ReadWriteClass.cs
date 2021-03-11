@@ -79,9 +79,17 @@ namespace ElectionSoft
             int votesTotal = 0;
 
             // Set data about election
-            electionName = data[0];
-            seatsToAllocate = Int32.Parse(data[1]);
-            electionTotalVotes = Int32.Parse(data[2]);
+            try
+            {
+                electionName = data[0];
+                seatsToAllocate = Int32.Parse(data[1]);
+                electionTotalVotes = Int32.Parse(data[2]);
+            }
+            catch (FormatException)
+            {
+                seatsToAllocate = 0;
+                electionTotalVotes = 0;
+            }
 
             if (seatsToAllocate < 0 || electionTotalVotes < 0)
             {
@@ -107,7 +115,16 @@ namespace ElectionSoft
 
                 if (Regex.IsMatch(nameOfParty, @"^[a-zA-Z ]+$"))
                 {
-                    int partyVotes = Int32.Parse(currentLine[1]);
+                    int partyVotes;
+
+                    try
+                    {
+                        partyVotes = Int32.Parse(currentLine[1]);
+                    }
+                    catch (FormatException)
+                    {
+                        partyVotes = 0;
+                    }
 
                     if (partyVotes < 0)
                     {
